@@ -33,7 +33,51 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Notes'),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _noteController,
+              decoration: const InputDecoration(
+                labelText: 'Enter your note',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: _addNote,
+            child: const Text('Add Note'),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: notesBox.listenable(),
+              builder: (context, Box box, _) {
+                if (box.isEmpty) {
+                  return const Center(child: Text('No notes yet!'));
+                }
 
+                return ListView.builder(
+                  itemCount: box.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(box.getAt(index) as String),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () => _deleteNote(index),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
