@@ -62,7 +62,7 @@ class _NotesPageState extends State<NotesPage> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: _addNote,
-                child: const Text('Add Note'),
+                child: const Text('Add Notes'),
               ),
             ],
           ),
